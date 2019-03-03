@@ -9,6 +9,18 @@
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-*/
+ */
 
-Route::get('/', 'DashboardController@index');
+Route::get('/', 'DashboardController@index')->name('dashboard');
+
+Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
+    Route::get('/', 'UserController@index')->name('index');
+
+    Route::get('/create', 'UserController@create')->name('create');
+    Route::get('/store', 'UserController@store')->name('store');
+
+    Route::get('{user}/edit', 'UserController@edit')->name('edit');
+    Route::get('{user}/update', 'UserController@update')->name('update');
+
+    Route::get('{user}/delete', 'UserController@delete')->name('delete');
+});
