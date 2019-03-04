@@ -30,7 +30,7 @@ class UserRepository
             $user->profile()->create($request->all());
         } catch (\Exception $e) {
             DB::rollBack();
-            throw \Exception($e);
+            throw new \Exception($e);
         }
 
         DB::commit();
@@ -45,7 +45,7 @@ class UserRepository
             $user->profile->update($request->all());
         } catch (\Exception $e) {
             DB::rollBack();
-            throw \Exception($e);
+            throw new \Exception($e);
         }
 
         DB::commit();

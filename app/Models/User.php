@@ -35,7 +35,8 @@ class User extends Authenticatable
         parent::boot();
         // When saving a record and there is a password in the request, encrypt the password
         static::saving(function ($user) {
-            if (Request::has('password')) {
+            $user->password = $user->getOriginal('password');
+            if (!empty(Request::get('password'))) {
                 $user->password = Hash::make(Request::get('password'));
             }
         });

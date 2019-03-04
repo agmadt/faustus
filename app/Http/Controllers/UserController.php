@@ -35,7 +35,7 @@ class UserController extends Controller
     public function store(UserStoreRequest $request)
     {
         $this->userRepository->store($request);
-        return redirect()->route('user.index');
+        return redirect()->route('user.index')->with('success', 'User successfully created.');
     }
 
     public function edit(User $user)
@@ -50,12 +50,12 @@ class UserController extends Controller
     public function update(UserUpdateRequest $request, User $user)
     {
         $this->userRepository->update($request, $user);
-        return redirect()->route('user.index');
+        return redirect()->route('user.index')->with('success', 'User successfully updated.');
     }
 
     public function delete(User $user)
     {
         $user->delete();
-        return redirect()->route('user.index');
+        return redirect()->route('user.index')->with('success', 'User successfully deleted.');
     }
 }

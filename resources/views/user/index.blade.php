@@ -14,6 +14,12 @@
 
 @section('content')
   <div class="col-md-12">
+    @include('partial.messages')
+    <div style="overflow: hidden; margin-bottom: 10px;">
+      <div class="pull-right">
+        <a href="{{ route('user.create') }}" class="btn btn-primary btn-sm">Create</a>
+      </div>
+    </div>
     <div class="box">
       <div class="box-body">
         <table class="table table-bordered table-responsive">
@@ -30,11 +36,15 @@
               <td>{{ $user->email }}</td>
               <td>
                 <a href="{{ route('user.edit', $user->id) }}" class="btn btn-primary btn-sm">Edit</a>
-                <a href="{{ route('user.delete', $user->id) }}" class="btn btn-danger btn-sm delete-button">Delete</a>
+                <form action="{{ route('user.delete', $user->id) }}" method="POST" style="display: inline-block;">
+                  {{ csrf_field() }}
+                  <input type="submit" value="Delete" class="btn btn-danger btn-sm delete-button">
+                </form>
               </td>
             </tr>
           @endforeach
         </table>
+        {{ $users->links() }}
       </div>
     </div>
   </div>

@@ -17,7 +17,7 @@
   <div class="col-md-12">
     <div class="box">
       <div class="box-body">
-        <form action="{{ route('user.update', $user->id) }}">
+        <form action="{{ route('user.update', $user->id) }}" method="POST">
           {{ csrf_field() }}
           <div class="form-group">
             <label for="user-first-name">First Name</label>
