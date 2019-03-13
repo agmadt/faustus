@@ -33,7 +33,7 @@
     </header>
     <aside class="main-sidebar">
       <section class="sidebar">
-        @include('layout.sidebar')
+        @include('layouts.sidebar')
       </section>
     </aside>
 

@@ -11,16 +11,21 @@
 |
  */
 
-Route::get('/', 'DashboardController@index')->name('dashboard');
+Auth::routes(['register' => false]);
 
-Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
-    Route::get('/', 'UserController@index')->name('index');
+Route::group(['middleware' => 'auth'], function () {
 
-    Route::get('/create', 'UserController@create')->name('create');
-    Route::post('/store', 'UserController@store')->name('store');
+    Route::get('/', 'DashboardController@index')->name('dashboard');
 
-    Route::get('{user}/edit', 'UserController@edit')->name('edit');
-    Route::post('{user}/update', 'UserController@update')->name('update');
+    Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
+        Route::get('/', 'UserController@index')->name('index');
 
-    Route::post('{user}/delete', 'UserController@delete')->name('delete');
+        Route::get('/create', 'UserController@create')->name('create');
+        Route::post('/store', 'UserController@store')->name('store');
+
+        Route::get('{user}/edit', 'UserController@edit')->name('edit');
+        Route::post('{user}/update', 'UserController@update')->name('update');
+
+        Route::post('{user}/delete', 'UserController@delete')->name('delete');
+    });
 });
