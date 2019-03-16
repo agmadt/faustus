@@ -26,3 +26,11 @@ $factory->define(User::class, function (Faker $faker) {
 $factory->afterCreating(User::class, function ($user, $faker) {
     $user->profile()->save(factory('App\Models\Profile')->make());
 });
+
+$factory->afterCreatingState(User::class, 'user', function ($user) {
+    $user->assignRole('user');
+});
+
+$factory->afterCreatingState(User::class, 'admin', function ($user) {
+    $user->assignRole('admin');
+});
