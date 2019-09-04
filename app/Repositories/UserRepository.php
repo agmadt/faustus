@@ -8,17 +8,39 @@ use Illuminate\Support\Facades\DB;
 
 class UserRepository
 {
-    public function get($pagination = null, $with = null)
-    {
-        $user = User::when($with, function ($query) use ($with) {
-            return $query->with($with);
-        });
+    private $model;
 
-        if ($pagination) {
-            return $user->paginate($pagination);
+    public function __construct(User $model)
+    {
+        $this->model = $model;
+    }
+
+    public function get($params = [])
+    {
+        $user = $this->model
+            ->when(! empty($params['with']), function ($query) use ($params) {
+                return $query->with($params['with']);
+            })
+            ->when(! empty($params['order']), function ($query) use ($params) {
+                return $query->orderByRaw($params['order']);
+            });
+
+        if ($params['pagination']) {
+            return $user->paginate($params['pagination']);
         }
 
         return $user->get();
+    }
+
+    public function findByColumn($column, $value)
+    {
+        $model = $this->model->where($column, $value)->first();
+
+        if (! $model) {
+            abort(404, 'User not found.');
+        }
+
+        return $model;
     }
 
     public function store(Request $request)

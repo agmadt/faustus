@@ -18,7 +18,10 @@ class UserController extends Controller
 
     public function index()
     {
-        $users = $this->userRepository->get(10, ['profile']);
+        $users = $this->userRepository->get([
+            'pagination' => 10,
+            'with' => ['profile'],
+        ]);
 
         $data = [
             'users' => $users,
@@ -35,7 +38,8 @@ class UserController extends Controller
     public function store(UserStoreRequest $request)
     {
         $this->userRepository->store($request);
-        return redirect()->route('user.index')->with('success', 'User successfully created.');
+        return redirect()->route('user.index')
+            ->with('success', 'User successfully created.');
     }
 
     public function edit(User $user)
@@ -50,12 +54,12 @@ class UserController extends Controller
     public function update(UserUpdateRequest $request, User $user)
     {
         $this->userRepository->update($request, $user);
-        return redirect()->route('user.index')->with('success', 'User successfully updated.');
+        return back()->with('success', 'User successfully updated.');
     }
 
     public function delete(User $user)
     {
         $user->delete();
-        return redirect()->route('user.index')->with('success', 'User successfully deleted.');
+        return back()->with('success', 'User successfully deleted.');
     }
 }
