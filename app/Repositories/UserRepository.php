@@ -78,6 +78,7 @@ class UserRepository
         DB::beginTransaction();
 
         try {
+            $user->profile->delete();
             $user->delete();
         } catch (\Exception $e) {
             DB::rollBack();
