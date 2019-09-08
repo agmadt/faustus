@@ -72,4 +72,18 @@ class UserRepository
 
         DB::commit();
     }
+
+    public function delete(User $user)
+    {
+        DB::beginTransaction();
+
+        try {
+            $user->delete();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw new \Exception($e);
+        }
+
+        DB::commit();
+    }
 }

@@ -59,7 +59,7 @@ class UserController extends Controller
 
     public function delete(User $user)
     {
-        $user->delete();
+        $this->userRepository->delete($user);
         return back()->with('success', 'User successfully deleted.');
     }
 }
