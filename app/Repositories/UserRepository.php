@@ -48,29 +48,28 @@ class UserRepository
         DB::beginTransaction();
 
         try {
-            $user = User::create($request->all());
+            $user = $this->model->create($request->all());
             $user->profile()->create($request->all());
+            DB::commit();
+            return $user;
         } catch (\Exception $e) {
             DB::rollBack();
             throw new \Exception($e);
         }
-
-        DB::commit();
     }
 
-    public function update(Request $request, User $user)
+    public function update($request, User $user)
     {
         DB::beginTransaction();
-
         try {
             $user->update($request->all());
             $user->profile->update($request->all());
+            DB::commit();
+            return $user;
         } catch (\Exception $e) {
             DB::rollBack();
             throw new \Exception($e);
         }
-
-        DB::commit();
     }
 
     public function delete(User $user)
@@ -80,11 +79,10 @@ class UserRepository
         try {
             $user->profile->delete();
             $user->delete();
+            DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
             throw new \Exception($e);
         }
-
-        DB::commit();
     }
 }

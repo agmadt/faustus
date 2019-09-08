@@ -58,4 +58,15 @@ class User extends Authenticatable
     {
         return $this->profile->first_name . ' ' . $this->profile->last_name;
     }
+
+    /**
+     * Retrieve the model for a bound value.
+     *
+     * @param  mixed  $value
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
+    public function resolveRouteBinding($value)
+    {
+        return $this->where('id', $value)->first() ?? abort(404, 'User not found');
+    }
 }

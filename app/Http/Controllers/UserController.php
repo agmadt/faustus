@@ -54,12 +54,12 @@ class UserController extends Controller
     public function update(UserUpdateRequest $request, User $user)
     {
         $this->userRepository->update($request, $user);
-        return back()->with('success', 'User successfully updated.');
+        return redirect()->route('user.index')->with('success', 'User successfully updated.');
     }
 
     public function delete(User $user)
     {
         $this->userRepository->delete($user);
-        return back()->with('success', 'User successfully deleted.');
+        return redirect()->route('user.index')->with('success', 'User successfully deleted.');
     }
 }
