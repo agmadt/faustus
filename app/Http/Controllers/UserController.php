@@ -33,7 +33,7 @@ class UserController extends Controller
     public function create()
     {
         $data = [
-            'user' => (new User)->load('profile'),
+            'user' => new User,
         ];
 
         return view('user.create', $data);
