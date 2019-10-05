@@ -28,9 +28,9 @@
             <th>Name</th>
             <th style="width: 200px">Action</th>
           </tr>
-          @foreach ($posts as $key => $post)
+          @foreach ($posts as $post)
             <tr>
-              <td>{{ $key += 1 }}</td>
+              <td>{{ $no += 1 }}</td>
               <td>{{ $post->title }}</td>
               <td>
                 <a href="{{ route('post.edit', $post->id) }}" class="btn btn-primary btn-sm">Edit</a>

@@ -17,11 +17,14 @@ class PostController extends Controller
 
     public function index()
     {
+        $page = request()->page ?? 1;
+        $pagination = 10;
         $posts = $this->postRepository->get([
-            'pagination' => 10,
+            'pagination' => $pagination,
         ]);
 
         $data = [
+            'no' => ($page - 1) * $pagination,
             'posts' => $posts,
         ];
 

@@ -18,12 +18,15 @@ class UserController extends Controller
 
     public function index()
     {
+        $page = request()->page ?? 1;
+        $pagination = 10;
         $users = $this->userRepository->get([
-            'pagination' => 10,
+            'pagination' => $pagination,
             'with' => ['profile'],
         ]);
 
         $data = [
+            'no' => ($page - 1) * $pagination,
             'users' => $users,
         ];
 

@@ -29,9 +29,9 @@
             <th>Email</th>
             <th style="width: 200px">Action</th>
           </tr>
-          @foreach ($users as $key => $user)
+          @foreach ($users as $user)
             <tr>
-              <td>{{ $key += 1 }}</td>
+              <td>{{ $no += 1 }}</td>
               <td>{{ $user->fullName }}</td>
               <td>{{ $user->email }}</td>
               <td>
