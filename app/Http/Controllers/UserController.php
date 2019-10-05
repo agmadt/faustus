@@ -32,7 +32,11 @@ class UserController extends Controller
 
     public function create()
     {
-        return view('user.create');
+        $data = [
+            'user' => (new User)->load('profile'),
+        ];
+
+        return view('user.create', $data);
     }
 
     public function store(UserStoreRequest $request)
