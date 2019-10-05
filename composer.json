@@ -15,7 +15,8 @@
         "spatie/laravel-permission": "^2.36",
         "mpociot/laravel-apidoc-generator": "^3.4",
         "dingo/api": "^2",
-        "tymon/jwt-auth": "1.0.*"
+        "tymon/jwt-auth": "1.0.*",
+        "laravelcollective/html": "5.8.*"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",

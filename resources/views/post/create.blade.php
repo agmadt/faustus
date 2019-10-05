@@ -1,15 +1,15 @@
 @extends('layouts.app')
 
-@section('page-title', 'Create User')
-@section('user', 'active')
-@section('user-create', 'active')
+@section('page-title', 'Create Post')
+@section('post', 'active')
+@section('post-create', 'active')
 
 @section('content-header')
-  <h1>Create User</h1>
+  <h1>Create Post</h1>
   <ol class="breadcrumb">
     <li><a href="{{ route('dashboard') }}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-    <li><a href="{{ route('user.index') }}">Users</a></li>
-    <li class="active">Create User</li>
+    <li><a href="{{ route('post.index') }}">Posts</a></li>
+    <li class="active">Create Post</li>
   </ol>
 @endsection
 
@@ -17,9 +17,9 @@
   <div class="col-md-12">
     <div class="box">
       <div class="box-body">
-        {!! Form::model($user, ['url' => route('user.store')]) !!}
+        {!! Form::model($post, ['url' => route('post.store')]) !!}
           {{ csrf_field() }}
-          @include('user._form')
+          @include('post._form')
           <input type="submit" value="Tambah" class="btn btn-primary btn-sm">
         {!! Form::close() !!}
       </div>

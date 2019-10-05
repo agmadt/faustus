@@ -28,4 +28,16 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::post('{user}/delete', 'UserController@delete')->name('delete');
     });
+
+    Route::group(['prefix' => 'post', 'as' => 'post.'], function () {
+        Route::get('/', 'PostController@index')->name('index');
+
+        Route::get('/create', 'PostController@create')->name('create');
+        Route::post('/store', 'PostController@store')->name('store');
+
+        Route::get('{post}/edit', 'PostController@edit')->name('edit');
+        Route::post('{post}/update', 'PostController@update')->name('update');
+
+        Route::post('{post}/delete', 'PostController@delete')->name('delete');
+    });
 });

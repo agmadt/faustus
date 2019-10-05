@@ -16,6 +16,18 @@
         <li class="@yield('user-create')"><a href="{{ route('user.create') }}">Create</a></li>
       </ul>
     </li>
+    <li class="treeview @yield('post')">
+      <a href="#">
+        <i class="fa fa-book"></i> <span>Post</span>
+        <span class="pull-right-container">
+        <i class="fa fa-angle-left pull-right"></i>
+        </span>
+      </a>
+      <ul class="treeview-menu">
+        <li class="@yield('post-index')"><a href="{{ route('post.index') }}">Posts</a></li>
+        <li class="@yield('post-create')"><a href="{{ route('post.create') }}">Create</a></li>
+      </ul>
+    </li>
     <li>
       <a href="" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
         <i class="fa fa-sign-out"></i> <span>Logout</span>
