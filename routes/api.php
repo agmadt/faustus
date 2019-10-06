@@ -18,8 +18,8 @@ $api->version('v1', function ($api) {
 
         $api->group(['prefix' => 'auth', 'namespace' => 'Auth'], function ($api) {
             $api->post('/login', 'LoginController@login');
-            $api->post('/refresh', 'LoginController@refresh');
 
+            $api->post('/refresh', 'LoginController@refresh')->middleware('api.auth');
             $api->post('/logout', 'LoginController@logout')->middleware('api.auth');
         });
 
@@ -27,8 +27,16 @@ $api->version('v1', function ($api) {
             $api->get('/', 'UserController@index');
             $api->post('/', 'UserController@store');
             $api->get('/{user}', 'UserController@show');
-            $api->patch('/{user}', 'UserController@update');
-            $api->delete('/{user}', 'UserController@delete');
+            $api->post('/{user}/update', 'UserController@update');
+            $api->post('/{user}/delete', 'UserController@delete');
+
+            $api->group(['prefix' => '{user}/posts'], function ($api) {
+                $api->get('/', 'PostController@index');
+                $api->post('/', 'PostController@store');
+                $api->get('/{post}', 'PostController@show');
+                $api->post('/{post}/update', 'PostController@update');
+                $api->post('/{post}/delete', 'PostController@delete');
+            });
         });
     });
 });

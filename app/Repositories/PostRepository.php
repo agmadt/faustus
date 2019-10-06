@@ -21,6 +21,9 @@ class PostRepository
             ->when(! empty($params['with']), function ($query) use ($params) {
                 return $query->with($params['with']);
             })
+            ->when(! empty($params['user_id']), function ($query) use ($params) {
+                return $query->where('user_id', $params['user_id']);
+            })
             ->when(! empty($params['order']), function ($query) use ($params) {
                 return $query->orderByRaw($params['order']);
             });

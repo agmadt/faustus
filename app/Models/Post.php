@@ -11,5 +11,16 @@ class Post extends Authenticatable
      *
      * @var array
      */
-    protected $fillable = ['title', 'description'];
+    protected $fillable = ['user_id', 'title', 'description'];
+
+    /**
+     * Retrieve the model for a bound value.
+     *
+     * @param  mixed  $value
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
+    public function resolveRouteBinding($value)
+    {
+        return $this->where('id', $value)->first() ?? abort(404, 'Post not found');
+    }
 }
