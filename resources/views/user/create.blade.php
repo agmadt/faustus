@@ -17,7 +17,7 @@
   <div class="col-md-12">
     <div class="box">
       <div class="box-body">
-        {!! Form::model($user, ['url' => route('user.store')]) !!}
+        {!! Form::model($user, ['url' => route('user.store'), 'enctype' => 'multipart/form-data']) !!}
           {{ csrf_field() }}
           @include('user._form')
           <input type="submit" value="Tambah" class="btn btn-primary btn-sm">

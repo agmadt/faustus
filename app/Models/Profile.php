@@ -12,6 +12,6 @@ class Profile extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'first_name', 'last_name',
+        'first_name', 'last_name', 'avatar',
     ];
 }

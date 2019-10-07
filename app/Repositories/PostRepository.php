@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class PostRepository
 {
@@ -78,6 +79,9 @@ class PostRepository
         DB::beginTransaction();
 
         try {
+            if (! empty($post->image)) {
+                Storage::delete($post->image);
+            }
             $post->delete();
             DB::commit();
         } catch (\Exception $e) {

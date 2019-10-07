@@ -17,7 +17,7 @@
   <div class="col-md-12">
     <div class="box">
       <div class="box-body">
-        {!! Form::model($post, ['url' => route('post.update', $post->id)]) !!}
+        {!! Form::model($post, ['url' => route('post.update', $post->id), 'enctype' => 'multipart/form-data']) !!}
           {{ csrf_field() }}
           @include('post._form')
           <input type="submit" value="Simpan" class="btn btn-primary btn-sm">

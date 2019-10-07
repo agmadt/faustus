@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class UserRepository
 {
@@ -77,6 +78,9 @@ class UserRepository
         DB::beginTransaction();
 
         try {
+            if (! empty($user->profile->avatar)) {
+                Storage::delete($user->profile->avatar);
+            }
             $user->profile->delete();
             $user->delete();
             DB::commit();

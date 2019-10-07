@@ -7,6 +7,7 @@ use App\Api\V1\Requests\UserStoreRequest;
 use App\Api\V1\Requests\UserUpdateRequest;
 use App\Api\V1\Transformers\UserItemTransformer;
 use App\Models\User;
+use App\Processor\ProcessUpload;
 use App\Repositories\UserRepository;
 use Dingo\Api\Http\Request;
 
@@ -41,13 +42,19 @@ class UserController extends ApiController
 
     public function store(UserStoreRequest $request)
     {
-        $user = $this->userRepository->store($request);
+        if ($request->has('file')) {
+            new ProcessUpload($request->file);
+        }
+        $user = $this->userRepository->store(request());
         return $this->response->item($user, new UserItemTransformer);
     }
 
     public function update(UserUpdateRequest $request, User $user)
     {
-        $user = $this->userRepository->update($request, $user);
+        if ($request->has('file')) {
+            new ProcessUpload($request->file, [], $user->profile);
+        }
+        $user = $this->userRepository->update(request(), $user);
         return $this->response->item($user, new UserItemTransformer);
     }
 

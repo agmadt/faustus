@@ -11,7 +11,7 @@ class Post extends Authenticatable
      *
      * @var array
      */
-    protected $fillable = ['user_id', 'title', 'description'];
+    protected $fillable = ['user_id', 'title', 'description', 'image'];
 
     /**
      * Retrieve the model for a bound value.

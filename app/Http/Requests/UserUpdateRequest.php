@@ -30,8 +30,8 @@ class UserUpdateRequest extends FormRequest
         return [
             'email' => 'required|email|max:255|unique:users,email,' . $user->id,
             'password_confirmed' => 'sometimes|same:password',
-            'first_name' => 'max:255',
-            'last_name' => 'max:255',
+            'profile.first_name' => 'max:255',
+            'profile.last_name' => 'max:255',
         ];
     }
 

@@ -5,8 +5,10 @@ namespace App\Api\V1\Controllers;
 use App\Api\V1\Controllers\ApiController;
 use App\Api\V1\Transformers\PostItemTransformer;
 use App\Http\Requests\PostStoreRequest;
+use App\Http\Requests\PostUpdateRequest;
 use App\Models\Post;
 use App\Models\User;
+use App\Processor\ProcessUpload;
 use App\Repositories\PostRepository;
 use Dingo\Api\Http\Request;
 
@@ -41,16 +43,34 @@ class PostController extends ApiController
 
     public function store(PostStoreRequest $request, User $user)
     {
-        $request->only(['title', 'description']);
-        $request->merge(['user_id' => $user->id]);
-        $post = $this->postRepository->store($request);
+        $request->only(['title', 'description', 'file']);
+        request()->merge(['user_id' => $user->id]);
+
+        if ($request->has('file')) {
+            new ProcessUpload($request->file, [
+                'width' => 400,
+                'column' => 'image',
+                'path' => 'post',
+            ]);
+        }
+
+        $post = $this->postRepository->store(request());
         return $this->response->item($post, new PostItemTransformer);
     }
 
-    public function update(PostStoreRequest $request, User $user, Post $post)
+    public function update(PostUpdateRequest $request, User $user, Post $post)
     {
-        $request->only(['title', 'description']);
-        $post = $this->postRepository->update($request, $post);
+        $request->only(['title', 'description', 'file']);
+
+        if ($request->has('file')) {
+            new ProcessUpload($request->file, [
+                'width' => 400,
+                'column' => 'image',
+                'path' => 'post',
+            ], $post);
+        }
+
+        $post = $this->postRepository->update(request(), $post);
         return $this->response->item($post, new PostItemTransformer);
     }
 

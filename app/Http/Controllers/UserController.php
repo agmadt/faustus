@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UserStoreRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Models\User;
+use App\Processor\ProcessUpload;
 use App\Repositories\UserRepository;
 
 class UserController extends Controller
@@ -44,7 +45,16 @@ class UserController extends Controller
 
     public function store(UserStoreRequest $request)
     {
-        $this->userRepository->store($request);
+        if ($request->hasFile('file')) {
+            $file = $request->file('file')->get();
+            new ProcessUpload($file);
+        }
+
+        request()->merge([
+            'first_name' => $request->profile['first_name'],
+            'last_name' => $request->profile['last_name'],
+        ]);
+        $this->userRepository->store(request());
         return redirect()->route('user.index')
             ->with('success', 'User successfully created.');
     }
@@ -60,7 +70,16 @@ class UserController extends Controller
 
     public function update(UserUpdateRequest $request, User $user)
     {
-        $this->userRepository->update($request, $user);
+        if ($request->hasFile('file')) {
+            $file = $request->file('file')->get();
+            new ProcessUpload($file, [], $user->profile);
+        }
+
+        request()->merge([
+            'first_name' => $request->profile['first_name'],
+            'last_name' => $request->profile['last_name'],
+        ]);
+        $this->userRepository->update(request(), $user);
         return redirect()->route('user.index')->with('success', 'User successfully updated.');
     }
 

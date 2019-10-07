@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PostStoreRequest;
 use App\Models\Post;
+use App\Processor\ProcessUpload;
 use App\Repositories\PostRepository;
 
 class PostController extends Controller
@@ -42,7 +43,19 @@ class PostController extends Controller
 
     public function store(PostStoreRequest $request)
     {
-        $this->postRepository->store($request);
+        if ($request->hasFile('file')) {
+            $file = $request->file('file')->get();
+            new ProcessUpload($file, [
+                'width' => 400,
+                'path' => 'post',
+                'column' => 'image',
+            ]);
+        }
+
+        request()->merge([
+            'user_id' => auth()->user()->id,
+        ]);
+        $this->postRepository->store(request());
         return redirect()->route('post.index')
             ->with('success', 'Post successfully created.');
     }
@@ -58,7 +71,16 @@ class PostController extends Controller
 
     public function update(PostStoreRequest $request, Post $post)
     {
-        $this->postRepository->update($request, $post);
+        if ($request->hasFile('file')) {
+            $file = $request->file('file')->get();
+            new ProcessUpload($file, [
+                'width' => 400,
+                'path' => 'post',
+                'column' => 'image',
+            ], $post);
+        }
+
+        $this->postRepository->update(request(), $post);
         return redirect()->route('post.index')->with('success', 'Post successfully updated.');
     }
 

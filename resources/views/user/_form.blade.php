@@ -1,6 +1,20 @@
 <div class="form-group">
+    {!! Form::label('file', 'Avatar') !!}
+    {!! Form::file('file', null, ['class' => 'form-control', 'required']) !!}
+    @if ($errors->has('file'))
+    <span class="help-block text-danger">
+        <strong>{{ $errors->first('file') }}</strong>
+    </span>
+    @endif
+</div>
+@if (!empty($user->profile->avatar))
+<div class="form-group">
+    <img src="{{ Storage::url($user->profile->avatar) }}" alt="">
+</div>
+@endif
+<div class="form-group">
     {!! Form::label('profile[first_name]', 'First name') !!}
-    {!! Form::text('profile[first_name]', null, ['class' => 'form-control', 'required', 'name' => 'first_name']) !!}
+    {!! Form::text('profile[first_name]', null, ['class' => 'form-control', 'required']) !!}
     @if ($errors->has('profile[first_name]'))
     <span class="help-block text-danger">
         <strong>{{ $errors->first('profile[first_name]') }}</strong>
@@ -9,7 +23,7 @@
 </div>
 <div class="form-group">
     {!! Form::label('profile[last_name]', 'Last name') !!}
-    {!! Form::text('profile[last_name]', null, ['class' => 'form-control', 'required', 'name' => 'last_name']) !!}
+    {!! Form::text('profile[last_name]', null, ['class' => 'form-control', 'required']) !!}
     @if ($errors->has('profile[last_name]'))
     <span class="help-block text-danger">
         <strong>{{ $errors->first('profile[last_name]') }}</strong>
